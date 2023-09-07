@@ -1,7 +1,7 @@
 SRCS=$(wildcard src/*.c)
 OBJS=$(SRCS:%.c=%.o)
 
-BIN=bin/tt
+BIN=tt
 
 CFLAGS=-Wall -Werror -Og -ggdb3 -Iinclude
 
