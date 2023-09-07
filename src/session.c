@@ -58,3 +58,15 @@ void remove_solve(session *_session, size_t index)
         
     _session->solves = realloc(_session->solves, sizeof(solve*) * --_session->count);
 }
+
+void reset_session(session *_session)
+{
+    if (_session->solves != NULL)
+        for (size_t i = 0; i < _session->count; i++)
+            del_solve(_session->solves[i]);
+    
+    free(_session->solves);
+
+    _session->solves = NULL;
+    _session->count = 0;
+}
