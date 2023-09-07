@@ -70,3 +70,10 @@ void reset_session(session *_session)
     _session->solves = NULL;
     _session->count = 0;
 }
+
+void print_session(session *_session)
+{
+    if (_session->solves != NULL)
+        for (size_t i = 0; i < _session->count; i++)
+            print_solve(_session->solves[i]);
+}
