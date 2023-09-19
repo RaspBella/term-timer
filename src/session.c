@@ -6,17 +6,17 @@
 struct session
 {
     char *name;
-    char *(*scramble)(void);
+    char *(*scrambler)(void);
     size_t count;
     solve **solves;
 };
 
-session *new_session(char *name, char *(*scramble)(void))
+session *new_session(char *name, char *(*scrambler)(void))
 {
     session *new = malloc(sizeof(session));
 
     new->name = name;
-    new->scramble = scramble;
+    new->scrambler = scrambler;
     new->count = 0;
     new->solves = NULL;
 
