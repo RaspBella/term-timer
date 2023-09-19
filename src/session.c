@@ -6,12 +6,12 @@
 struct session
 {
     char *name;
-    char *(*scrambler)(void);
+    char *(*scrambler)(size_t);
     size_t count;
     solve **solves;
 };
 
-session *new_session(char *name, char *(*scrambler)(void))
+session *new_session(char *name, char *(*scrambler)(size_t))
 {
     session *new = malloc(sizeof(session));
 

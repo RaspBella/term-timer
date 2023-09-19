@@ -2,16 +2,11 @@
 #include <session.h>
 #include <stdio.h>
 
-char *scramble(void)
-{
-    return NULL;
-}
-
 int main(void)
 {
     char *name = strdup("3x3");
 
-    session *new = new_session(name, &scramble);
+    session *new = new_session(name, NULL);
 
     add_solve(new, new_solve(6.81, strdup(""), strdup("R' D2 B2 D' L' B2 U F' D F2 R D2 L' F2 U2 F2 R' D2 L' D2 F2"), time(NULL)));
     add_solve(new, new_solve(7.72, strdup(""), strdup("B2 F2 U' R2 U L2 D' B2 D F2 R' B' L F2 D F D' R B2 D'"), time(NULL)));
