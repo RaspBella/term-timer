@@ -21,7 +21,7 @@ struct data
 {
     struct
     {
-        
+        int inspection:2; // off, on, on unless a blind event
     }
     settings;
     size_t session_count;
