@@ -14,7 +14,7 @@ struct session
     char *name;
     char *(*scramble_generator)(size_t); // takes seed for random and returns scramble as string
     size_t count;
-    solve *solves;
+    struct solve *solves;
 };
 
 struct data
@@ -30,5 +30,5 @@ struct data
     settings;
 
     size_t session_count;
-    session *sessions;
+    struct session *sessions;
 };
