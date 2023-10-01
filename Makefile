@@ -1,20 +1,22 @@
 SRCS=$(wildcard src/*.c)
 OBJS=$(SRCS:src/%.c=obj/%.o)
-
-BIN=bin/tt
+BINDIR=bin
 
 CFLAGS=-Wall -Werror -Og -ggdb3 -Iinclude
 
-default: ${BIN}
+default: ${BINDIR} ${BINDIR}/tt
 
-${BIN}: ${OBJS}
+${BINDIR}:
+	mkdir ${BINDIR}
+
+${BINDIR}/tt: ${OBJS}
 	cc ${CFLAGS} $^ -o $@
 
 obj/%.o: src/%.c
 	cc ${CFLAGS} -c $< -o $@
 
 clean:
-	rm -f ${BIN} ${OBJS}
+	rm -f ${BINDIR}/tt ${OBJS}
 
 build:
 	make CFLAGS="-Wall -O3 -Iinclude"
