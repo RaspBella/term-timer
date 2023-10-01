@@ -1,79 +1,46 @@
-#include <session.h>
 #include <stdlib.h>
-#include <solve.h>
-#include <string.h>
+#include "session.h"
 
-struct session
+void read_in_session(struct session *session, FILE *fp)
 {
-    char *name;
-    char *(*scrambler)(size_t);
-    size_t count;
-    solve **solves;
-};
+    size_t temp;
+    if (fread(&temp, sizeof(temp), 1, fp) != 1)
+    {
+        fprintf(stderr, "Error: Couldn't read length of name for session from file\n");
+        exit(EXIT_FAILURE);
+    }
 
-session *new_session(char *name, char *(*scrambler)(size_t))
-{
-    session *new = malloc(sizeof(session));
+    if (temp == 0)
+    {
+        fprintf(stderr, "Error: Length of name for session is invalid\nFile is likely corrupted\n");
+        exit(EXIT_FAILURE);
+    }
 
-    new->name = name;
-    new->scrambler = scrambler;
-    new->count = 0;
-    new->solves = NULL;
+    session->name = malloc((temp+1) * sizeof(*session->name));
+    if (fread(session->name, sizeof(*session->name), temp, fp) != temp)
+    {
+        fprintf(stderr, "Error: Couldn't read characters of name for session from file\n");
+        exit(EXIT_FAILURE);
+    }
+    session->name[temp] = 0;
 
-    return new;
-}
+    if (fread(&temp, sizeof(temp), 1, fp) != 1)
+    {
+        fprintf(stderr, "Error: Couldn't read scramble generator id for session from file\n");
+        exit(EXIT_FAILURE);
+    }
+    session->scramble_generator = scramble_generators[temp];
 
-void del_session(session *_session)
-{
-    free(_session->name);
+    if (fread(&session->count, sizeof(session->count), 1, fp) != 1)
+    {
+        fprintf(stderr, "Error: Couldn't read solve count for session from file\n");
+        exit(EXIT_FAILURE);
+    }
 
-    if (_session->solves != NULL)
-        for (size_t i = 0; i < _session->count; i++)
-            del_solve(_session->solves[i]);
-
-    free(_session->solves);
-
-    free(_session);
-}
-
-void add_solve(session *_session, solve *_solve)
-{
-    if (_session->count == 0)
-        _session->solves = malloc(sizeof(solve*) * ++_session->count);
-
-    else
-        _session->solves = realloc(_session->solves, sizeof(solve*) * ++_session->count);
-
-    _session->solves[_session->count-1] = _solve;
-}
-
-void remove_solve(session *_session, size_t index)
-{
-    if (index > _session->count-1) return;
-
-    del_solve(_session->solves[index]);
-    
-    if (index < _session->count-1)
-        memmove(_session->solves+index, _session->solves+_session->count-1, sizeof(solve*));
-        
-    _session->solves = realloc(_session->solves, sizeof(solve*) * --_session->count);
-}
-
-void reset_session(session *_session)
-{
-    if (_session->solves != NULL)
-        for (size_t i = 0; i < _session->count; i++)
-            del_solve(_session->solves[i]);
-    
-    free(_session->solves);
-
-    _session->solves = NULL;
-    _session->count = 0;
-}
-
-void print_session(session *_session)
-{
-    if (_session->solves != NULL)
-        for (size_t i = 0; i < _session->count; i++)
-            print_solve(_session->solves[i]);
+    if (session->count) // non zero
+    {
+        session->solves = malloc(session->count * sizeof(struct solve));
+        for (size_t i = 0; i < session->count; i++)
+            read_in_solve(session->solves+i, fp);
+    }
 }

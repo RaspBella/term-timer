@@ -1,13 +1,16 @@
 #pragma once
 
-#include <solve.h>
 #include <stddef.h>
+#include <stdio.h>
+#include "solve.h"
+#include "scramblers.h"
 
-typedef struct session session;
+struct session
+{
+    char *name;
+    char *(*scramble_generator)(size_t); // takes seed for random and returns scramble as string
+    size_t count;
+    struct solve *solves;
+};
 
-session *new_session(char*, char*(*)(size_t));
-void del_session(session*);
-void add_solve(session*, solve*);
-void remove_solve(session*, size_t);
-void reset_session(session*);
-void print_session(session*);
+void read_in_session(struct session*, FILE*);

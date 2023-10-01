@@ -1,21 +1,8 @@
-#include <stdlib.h>
+#pragma once
+
+#include <stddef.h>
 #include <stdio.h>
-
-struct solve
-{
-    float seconds;
-    char *comment;
-    char *scramble;
-    time_t datetime;
-};
-
-struct session
-{
-    char *name;
-    char *(*scramble_generator)(size_t); // takes seed for random and returns scramble as string
-    size_t count;
-    struct solve *solves;
-};
+#include "session.h"
 
 struct data
 {
@@ -31,4 +18,10 @@ struct data
 
     size_t session_count;
     struct session *sessions;
+    struct session *current_session;
 };
+
+extern struct data data;
+
+void read_in_data(FILE*);
+void write_out_data(FILE*);

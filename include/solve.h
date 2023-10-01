@@ -1,9 +1,14 @@
 #pragma once
 
+#include <stdio.h>
 #include <time.h>
 
-typedef struct solve solve;
+struct solve
+{
+    float seconds;
+    char *comment;
+    char *scramble;
+    time_t datetime;
+};
 
-solve *new_solve(float, char*, char*, time_t);
-void del_solve(solve*);
-void print_solve(solve*);
+void read_in_solve(struct solve*, FILE*);

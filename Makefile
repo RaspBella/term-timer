@@ -1,7 +1,7 @@
 SRCS=$(wildcard src/*.c)
-OBJS=$(SRCS:%.c=%.o)
+OBJS=$(SRCS:src/%.c=obj/%.o)
 
-BIN=tt
+BIN=bin/tt
 
 CFLAGS=-Wall -Werror -Og -ggdb3 -Iinclude
 
@@ -10,7 +10,7 @@ default: ${BIN}
 ${BIN}: ${OBJS}
 	cc ${CFLAGS} $^ -o $@
 
-%.o: %.c
+obj/%.o: src/%.c
 	cc ${CFLAGS} -c $< -o $@
 
 clean:
@@ -18,7 +18,3 @@ clean:
 
 build:
 	make CFLAGS="-Wall -O3 -Iinclude"
-
-src/solve.o: src/solve.c include/solve.h
-src/session.o: src/session.c include/session.h include/solve.h
-src/test.o: src/test.c include/session.h
