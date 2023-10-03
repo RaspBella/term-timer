@@ -60,3 +60,10 @@ void write_out_data(FILE *fp)
         exit(EXIT_FAILURE);
     }
 }
+
+void free_data(void)
+{
+    for (size_t i = 0; i < data.session_count; i++)
+        free_session(data.sessions+i);
+    free(data.sessions);
+}

@@ -15,3 +15,4 @@ struct session
 
 void read_in_session(struct session*, FILE*);
 void write_out_session(const struct session*, FILE*);
+void free_session(struct session*);

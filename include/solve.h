@@ -13,3 +13,4 @@ struct solve
 
 void read_in_solve(struct solve*, FILE*);
 void write_out_solve(const struct solve*, FILE*);
+void free_solve(struct solve*);

@@ -80,3 +80,11 @@ void write_out_session(const struct session *session, FILE *fp)
             write_out_solve(session->solves+i, fp);
     }
 }
+
+void free_session(struct session *session)
+{
+    free(session->name);
+    for (size_t i = 0; i < session->count; i++)
+        free_solve(session->solves+i);
+    free(session->solves);
+}

@@ -25,3 +25,4 @@ extern struct data data;
 
 void read_in_data(FILE*);
 void write_out_data(FILE*);
+void free_data(void);

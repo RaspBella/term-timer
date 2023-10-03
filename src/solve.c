@@ -99,3 +99,9 @@ void write_out_solve(const struct solve *solve, FILE *fp)
         exit(EXIT_FAILURE);
     }
 }
+
+void free_solve(struct solve *solve)
+{
+    free(solve->comment);
+    free(solve->scramble);
+}
