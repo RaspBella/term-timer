@@ -2,6 +2,8 @@ SRCS=$(wildcard src/*.c)
 OBJS=$(SRCS:src/%.c=obj/%.o)
 BINDIR=bin
 
+CC=gcc
+
 CFLAGS=-Wall -Werror -Og -ggdb3 -Iinclude
 
 default: ${BINDIR} ${BINDIR}/tt
@@ -10,10 +12,10 @@ ${BINDIR}:
 	mkdir ${BINDIR}
 
 ${BINDIR}/tt: ${OBJS}
-	cc ${CFLAGS} $^ -o $@
+	${CC} ${CFLAGS} $^ -o $@
 
 obj/%.o: src/%.c
-	cc ${CFLAGS} -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
 	rm -f ${BINDIR}/tt ${OBJS}
