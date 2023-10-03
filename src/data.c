@@ -46,4 +46,17 @@ void write_out_data(FILE *fp)
         fprintf(stderr, "Error: Couldn't write session count to file\n");
         exit(EXIT_FAILURE);
     }
+
+    if (data.session_count) // non zero
+    {
+        for (size_t i = 0; i < data.session_count; i++)
+            write_out_session(data.sessions+i, fp);
+    }
+
+    size_t temp = data.current_session - data.sessions;
+    if (fwrite(&temp, sizeof(temp), 1, fp) != 1)
+    {
+        fprintf(stderr, "Error: Couldn't write current session index to file\n");
+        exit(EXIT_FAILURE);
+    }
 }
