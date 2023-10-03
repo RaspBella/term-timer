@@ -18,7 +18,7 @@ obj/%.o: src/%.c
 	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	rm -f ${BINDIR}/tt ${OBJS}
+	rm -f ${BINDIR}/tt* ${OBJS}
 
 build:
 	make CFLAGS="-Wall -O3 -Iinclude"
