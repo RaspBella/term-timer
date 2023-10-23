@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <ncurses.h>
 #include <string.h>
 
 #include "data.h"
@@ -15,6 +16,7 @@ void cleanup(void)
     fclose(fp);
     free_data();
     free(filename);
+    endwin();
 }
 
 int main(void)
@@ -47,6 +49,10 @@ int main(void)
     }
 
     // Do solves and stuff here
+    initscr();
+    printw("Hello, ncurses!");
+    refresh();
+    getch();
 
     exit(EXIT_SUCCESS);
 }

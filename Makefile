@@ -4,7 +4,7 @@ BINDIR=bin
 
 CC=gcc
 
-CFLAGS=-Wall -Werror -Og -ggdb3 -Iinclude
+CFLAGS=-Wall -Werror -Og -ggdb3 -Iinclude -lncurses -ltinfo
 
 default: ${BINDIR} ${BINDIR}/tt
 
@@ -21,4 +21,4 @@ clean:
 	rm -f ${BINDIR}/tt* ${OBJS}
 
 build:
-	make CFLAGS="-Wall -O3 -Iinclude"
+	make CFLAGS="-Wall -O3 -Iinclude -lncurses -ltinfo"
